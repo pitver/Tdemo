@@ -1,8 +1,8 @@
 package com.example.controller;
 
-import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,16 +14,17 @@ import java.io.IOException;
 @RestController
 public class OCRController {
 
+  private  final Tesseract tesseract;
+
+    public OCRController(Tesseract tesseract) {
+        this.tesseract = tesseract;
+    }
+
     @PostMapping("/ocr")
     public String performOCR(@RequestBody MultipartFile file) throws IOException, TesseractException {
         // Создаем временный файл для сохранения загруженного изображения
         File tempFile = File.createTempFile("temp", file.getOriginalFilename());
         file.transferTo(tempFile);
-
-        // Создаем экземпляр Tesseract
-        ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath("D:\\tesseract\\tessdata");
-        tesseract.setLanguage("rus+eng");
 
         // Распознаем текст на изображении
         String result = tesseract.doOCR(tempFile);
