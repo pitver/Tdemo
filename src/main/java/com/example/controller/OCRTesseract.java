@@ -2,7 +2,6 @@ package com.example.controller;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +11,11 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-public class OCRController {
+public class OCRTesseract {
 
   private  final Tesseract tesseract;
 
-    public OCRController(Tesseract tesseract) {
+    public OCRTesseract(Tesseract tesseract) {
         this.tesseract = tesseract;
     }
 
